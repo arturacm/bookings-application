@@ -1,5 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setSelectedLocation } from '@/store/slices/location';
+import { addAction } from '@/store/slices/reservation';
+import { ReservationPayload } from '@/types';
 import { Box, Button, Card, Stack, TextField } from '@mui/material';
 import { FormEvent, useState } from 'react';
 
@@ -24,6 +26,15 @@ export default function CreateReservationForm() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const reservation = {
+      customerName: name,
+      checkIn: checkInDate,
+      checkOut: checkoutDate,
+      locationId: selectedLocation
+    } satisfies ReservationPayload;
+
+    dispatch(addAction(reservation));
     dispatch(setSelectedLocation(null));
     handleClear();
   };
