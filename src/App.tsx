@@ -1,7 +1,11 @@
-import { Typography } from "@mui/material";
+import Main from '@/components/Main';
+import Locations from './components/Locations';
 
 function App() {
-  return <Typography variant="h1">Hello, World</Typography>;
+  return (
+    <Main gap={2} padding={0.5}>
+      <Locations />
+    </Main>
+  );
 }
-
 export default App;
