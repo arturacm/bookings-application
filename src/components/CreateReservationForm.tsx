@@ -3,6 +3,7 @@ import { setSelectedLocation } from '@/store/slices/location';
 import { addAction } from '@/store/slices/reservation';
 import { ReservationPayload } from '@/types';
 import { Box, Button, Card, Stack, TextField } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { FormEvent, useState } from 'react';
 
 const todaysDate = new Date().toISOString().split('T')[0];
@@ -12,6 +13,7 @@ export default function CreateReservationForm() {
     state => state.location.selectedLocation
   );
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [name, setName] = useState('');
   const [checkInDate, setCheckInDate] = useState('');
@@ -36,6 +38,7 @@ export default function CreateReservationForm() {
 
     dispatch(addAction(reservation));
     dispatch(setSelectedLocation(null));
+    enqueueSnackbar('A new reservation was created', { variant: 'success' })
     handleClear();
   };
 

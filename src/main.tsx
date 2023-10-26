@@ -10,14 +10,17 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from '@/theme.tsx';
 import { Provider } from 'react-redux';
 import store from './store';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
+      <SnackbarProvider maxSnack={5}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </SnackbarProvider>
     </Provider>
   </React.StrictMode>
 );
