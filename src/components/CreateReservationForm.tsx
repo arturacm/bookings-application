@@ -3,7 +3,7 @@ import { setSelectedLocation } from '@/store/slices/location';
 import { addAction } from '@/store/slices/reservation';
 import { ReservationPayload } from '@/types';
 import checkDateAvailability from '@/utils/checkDateAvailability';
-import { Box, Button, Card, Stack, TextField } from '@mui/material';
+import { Box, Button, Card, Stack, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { FormEvent, useState } from 'react';
 
@@ -64,50 +64,58 @@ export default function CreateReservationForm() {
   };
 
   return (
-    <Box component={Card} width="100%">
-      <Stack
-        direction={{ md: 'column', lg: 'row' }}
-        width="100%"
-        gap={2}
-        p={1}
-        component="form"
-        onSubmit={handleSubmit}
-      >
-        <Stack flex={1} gap={2} direction={{ sm: 'column', md: 'row' }}>
-          <TextField
-            fullWidth
-            label="User name"
-            onChange={e => setName(e.target.value)}
-            value={name}
-          />
-          <TextField
-            fullWidth
-            type="date"
-            label="CheckIn Date"
-            onChange={e => setCheckInDate(e.target.value)}
-            value={checkInDate}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{ min: todaysDate }}
-          />
-          <TextField
-            fullWidth
-            type="date"
-            label="Checkout Date"
-            onChange={e => setCheckoutDate(e.target.value)}
-            value={checkoutDate}
-            InputLabelProps={{ shrink: true }}
-            inputProps={{ min: checkInDate || todaysDate }}
-          />
+    <>
+      <Typography variant="h4">Create new reservation</Typography>
+      <Box component={Card} width="100%">
+        <Stack
+          direction={{ md: 'column', lg: 'row' }}
+          width="100%"
+          gap={2}
+          p={1}
+          component="form"
+          onSubmit={handleSubmit}
+        >
+          <Stack flex={1} gap={2} direction={{ sm: 'column', md: 'row' }}>
+            <TextField
+              fullWidth
+              label="User name"
+              onChange={e => setName(e.target.value)}
+              value={name}
+            />
+            <TextField
+              fullWidth
+              type="date"
+              label="CheckIn Date"
+              onChange={e => setCheckInDate(e.target.value)}
+              value={checkInDate}
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: todaysDate }}
+            />
+            <TextField
+              fullWidth
+              type="date"
+              label="Checkout Date"
+              onChange={e => setCheckoutDate(e.target.value)}
+              value={checkoutDate}
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: checkInDate || todaysDate }}
+            />
+          </Stack>
+          <Stack direction="row" flex={0.5} gap={2}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="secondary"
+              type="submit"
+            >
+              Create
+            </Button>
+            <Button fullWidth onClick={handleClear}>
+              Cancel
+            </Button>
+          </Stack>
         </Stack>
-        <Stack direction="row" flex={0.5} gap={2}>
-          <Button fullWidth variant="contained" color="secondary" type="submit">
-            Create
-          </Button>
-          <Button fullWidth onClick={handleClear}>
-            Cancel
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </>
   );
 }
