@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setSelectedLocation } from '@/store/slices/location';
 import { addAction } from '@/store/slices/reservation';
 import { ReservationPayload } from '@/types';
+import checkDateAvailability from '@/utils/checkDateAvailability';
 import { Box, Button, Card, Stack, TextField } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { FormEvent, useState } from 'react';
@@ -11,6 +12,9 @@ const todaysDate = new Date().toISOString().split('T')[0];
 export default function CreateReservationForm() {
   const selectedLocation = useAppSelector(
     state => state.location.selectedLocation
+  );
+  const allReservations = useAppSelector(
+    state => state.reservation.reservations
   );
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -36,9 +40,26 @@ export default function CreateReservationForm() {
       locationId: selectedLocation
     } satisfies ReservationPayload;
 
+    if (
+      name.trim() === '' ||
+      checkInDate.trim() === '' ||
+      checkoutDate.trim() === ''
+    ) {
+      enqueueSnackbar('Please fill in all fields', {
+        variant: 'error'
+      });
+      return;
+    }
+
+    if (checkDateAvailability(reservation, allReservations)) {
+      enqueueSnackbar('The location is not available at this date', {
+        variant: 'error'
+      });
+      return;
+    }
     dispatch(addAction(reservation));
     dispatch(setSelectedLocation(null));
-    enqueueSnackbar('A new reservation was created', { variant: 'success' })
+    enqueueSnackbar('A new reservation was created', { variant: 'success' });
     handleClear();
   };
 
