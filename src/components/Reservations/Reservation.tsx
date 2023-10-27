@@ -10,6 +10,8 @@ import {
   Typography
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
+import UpdateReservationModal from './UpdateReservationModal';
 
 interface ReservationProps {
   customerName: string;
@@ -29,6 +31,7 @@ function Reservation({
   const location = useAppSelector(state =>
     state.location.locations.find(location => location.id === locationId)
   );
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   if (!location) return null;
@@ -72,7 +75,6 @@ function Reservation({
             <Typography variant="h4">{customerName}</Typography>
           </Stack>
           <Divider flexItem variant="middle" />
-          <Stack></Stack>
           <Stack alignItems="center">
             <Typography>
               Check In : <b>{checkIn}</b>
@@ -84,7 +86,9 @@ function Reservation({
         </Stack>
 
         <Stack gap={2} m={2} direction="row">
-          <Button variant="contained">Edit</Button>
+          <Button variant="contained" onClick={() => setEditModalOpen(true)}>
+            Edit
+          </Button>
           <Button
             color="error"
             onClick={() => {
@@ -96,6 +100,16 @@ function Reservation({
           </Button>
         </Stack>
       </Stack>
+      <UpdateReservationModal
+        customerName={customerName}
+        checkIn={checkIn}
+        checkOut={checkOut}
+        locationId={locationId}
+        reservationId={id}
+        open={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        onSubmit={console.log}
+      />
     </Stack>
   );
 }

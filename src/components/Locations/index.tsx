@@ -3,6 +3,10 @@ import { Stack, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setSelectedLocation } from '@/store/slices/location';
 
+// interface LocationsProps {
+
+// }
+
 function Locations() {
   const { locations, selectedLocation } = useAppSelector(
     state => state.location

@@ -19,10 +19,26 @@ export const reservationSlice = createSlice({
       );
 
       state.reservations = newReservations;
+    },
+    updateAction: (
+      state,
+      {
+        payload: { id, input }
+      }: PayloadAction<{ id: string; input: ReservationPayload }>
+    ) => {
+      const res = state.reservations.find(el => el.id === id);
+
+      if (!res) return;
+
+      res.checkIn = input.checkIn;
+      res.checkOut = input.checkOut;
+      res.customerName = input.customerName;
+      res.locationId = input.locationId;
     }
   }
 });
 
-export const { addAction, deleteAction } = reservationSlice.actions;
+export const { addAction, deleteAction, updateAction } =
+  reservationSlice.actions;
 
 export default reservationSlice.reducer;
