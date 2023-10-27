@@ -12,10 +12,17 @@ export const reservationSlice = createSlice({
   reducers: {
     addAction: (state, { payload }: PayloadAction<ReservationPayload>) => {
       state.reservations.push({ ...payload, id: uuid() });
+    },
+    deleteAction: (state, { payload }: PayloadAction<string>) => {
+      const newReservations = state.reservations.filter(
+        reservation => reservation.id !== payload
+      );
+
+      state.reservations = newReservations;
     }
   }
 });
 
-export const { addAction } = reservationSlice.actions;
+export const { addAction, deleteAction } = reservationSlice.actions;
 
 export default reservationSlice.reducer;

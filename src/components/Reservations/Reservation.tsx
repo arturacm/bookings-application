@@ -1,4 +1,5 @@
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { deleteAction } from '@/store/slices/reservation';
 import {
   Box,
   Button,
@@ -8,23 +9,28 @@ import {
   Stack,
   Typography
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 interface ReservationProps {
   customerName: string;
   checkIn: string;
   checkOut: string;
   locationId: number;
+  id: string;
 }
 
 function Reservation({
   customerName,
   checkIn,
   checkOut,
-  locationId
+  locationId,
+  id
 }: ReservationProps) {
   const location = useAppSelector(state =>
     state.location.locations.find(location => location.id === locationId)
   );
+  const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   if (!location) return null;
   return (
     <Stack
@@ -79,7 +85,15 @@ function Reservation({
 
         <Stack gap={2} m={2} direction="row">
           <Button variant="contained">Edit</Button>
-          <Button color="error">Delete</Button>
+          <Button
+            color="error"
+            onClick={() => {
+              dispatch(deleteAction(id));
+              enqueueSnackbar('The reservation was deleted');
+            }}
+          >
+            Delete
+          </Button>
         </Stack>
       </Stack>
     </Stack>
