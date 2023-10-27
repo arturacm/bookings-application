@@ -43,5 +43,24 @@ The webpage is fully responsive for desktop and mobile.
  * Redux Toolkit
  * ES-Lint + Prettier
 
+## Running the project
+
+### Use node
+This project was created with node version v18.16.0. It is recommended to use `nvm` for guaranteeing compatbility. A [.nvmrc](./.nvmrc) file is in the project so with `nvm` installed you can run:
+```
+nvm use
+```
+### Install dependencies
+This project was created with `yarn`. It is recommended to use it or any package manager of your choice. Run:
+```
+yarn
+```
+### Start the project
+To run `vite` in dev mode, run:
+```
+yarn dev
+```
+By default, it will run on port `http://localhost:5173/` but make sure to check in the terminal.
+
  ## Credits
  Made by [Artur Moreira](https://github.com/arturacm)
